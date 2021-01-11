@@ -2,18 +2,18 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="keywords" content="">
-  <meta name="description" content="">
-  <meta name="author" content="">
-  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-  <link rel="icon" href="/assets/images/favicon.png" type="image/png">
-  <title>Index</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/assets/images/favicon.png" type="image/png">
+    <title>Activity Index</title>
 
     <!--Begin  Page Level  CSS -->
-    <link href="/assets/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet"/>
-     <!--End  Page Level  CSS -->
+    <link href="/assets/plugins/morris-chart/morris.css" rel="stylesheet">
+    <link href="/assets/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
+    <!--End  Page Level  CSS -->
     <link href="/assets/css/icons.css" rel="stylesheet">
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="/assets/css/style.css" rel="stylesheet">
@@ -31,116 +31,205 @@
 <body class="sticky-header">
 
 
-<div class="left-side sticky-left-side" th:fragment="lefterBar">
+    <!--引入左侧菜单栏-->
+    <div class="left-side sticky-left-side">
+        <!--logo-->
+        <div class="logo">
+            <a href="/"><img src="/assets/images/logo-icon.png" alt=""></a>
+        </div>
 
-    <!--logo-->
-    <div class="logo">
-        <a href="/"><img src="/assets/images/logo-icon.png" alt=""></a>
+        <div class="logo-icon text-center">
+            <a href="/"><img src="/assets/images/logo-icon.png" alt=""></a>
+        </div>
+        <!--logo-->
+
+        <div class="left-side-inner" >
+            <!--Sidebar nav-->
+            <ul class="nav nav-pills nav-stacked custom-nav">
+                <li class="menu-list">
+                    <a href="#"><i class="icon-layers"></i>
+                        <span>社团管理</span></a>
+                    <ul class="sub-menu-list">
+                        <li><a href="@{/order/user/list}">发布公告</a></li>
+                        <li><a href="@{/}"> 我要下单</a></li>
+                    </ul>
+                </li>
+
+                <li class="menu-list">
+                    <a href="#"><i class="icon-layers"></i>
+                        <span>社团用户</span></a>
+                    <ul class="sub-menu-list">
+                        <li><a href="#">用户1</a></li>
+                        <li><a href="#">用户2</a></li>
+                        <li><a href="#">用户3</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <!--End sidebar nav-->
+        </div>
     </div>
 
-    <div class="logo-icon text-center">
-        <a href="/"><img src="/assets/images/logo-icon.png" alt=""></a>
-    </div>
-    <!--logo-->
-
-    <div class="left-side-inner">
-        <!--Sidebar nav-->
-        <ul class="nav nav-pills nav-stacked custom-nav">
-            <li th:class="${activeUrl=='userOrder'?'menu-list nav-active':'menu-list'}">
-                <a href="#"><i class="icon-layers"></i>
-                    <span>所有用户</span></a>
-                <ul class="sub-menu-list">
-                    <li><a>211</a></li>
-                    <li><a> 222</a></li>
-                </ul>
-            </li>
-        </ul>
-        <!--End sidebar nav-->
-
-    </div>
-</div>
 
     <!-- main content start-->
-<div class="main-content" >
-<div th:replace="header :: headerBar"></div>
+    <div class="main-content">
+        <div th:replace="header :: headerBar"></div>
+
         <!--body wrapper start-->
         <div class="wrapper">
-          <!--Start Page Title-->
-           <div class="page-title-box">
-                <h4 class="page-title">活动</h4>
+
+            <!--Start Page Title-->
+            <div class="page-title-box">
+                <h4 class="page-title">Activity Project </h4>
                 <ol class="breadcrumb">
                     <li>
-                        <a href="#">活动</a>
+                        <a href="#"></a>
                     </li>
 
                     <li class="active">
-                        活动
+
                     </li>
                 </ol>
                 <div class="clearfix"></div>
-             </div>
-              <!--End Page Title-->
+            </div>
+            <!--End Page Title-->
 
-                   <!--Start row-->
-                   <div class="row">
+            <!--Start row-->
+            <div class="row">
+                <div class="container">
+                    <div class="analytics-box">
 
-                     <!-- Start inbox widget-->
-                     <div class="col-md-12">
-                        <div class="white-box">
-                          <h2 class="header-title"> Projects </h2>
-                            <div class="table-responsive">
-                              <table class="table table-hover">
-                                <thead>
-                                  <tr>
-                                    <th>#</th>
-                                    <th>Project Name</th>
-                                    <th >Start Date</th>
-                                    <th>Deadline Date</th>
-                                    <th>Status</th>
-                                    <th>Progress</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <tr>
-                                    <td>1</td>
-                                    <td>Design new theme</td>
-                                    <td>10/10/2016</td>
-                                    <td>12/11/2016</td>
-                                    <td><span class="label label-warning">Pending</span></td>
-                                    <td><div class="progress progress-striped progress-sm">
-                                      <div class="progress-bar progress-bar-warning" style="width: 25%;"></div>
-                                    </div></td>
-                                  </tr>
-                                  <tr>
-                                    <td>2</td>
-                                    <td>Website Redesign</td>
-                                    <td>10/10/2016</td>
-                                   <td>12/11/2016</td>
-                                    <td><span class="label label-success">In Progress</span></td>
-                                    <td><div class="progress progress-striped progress-sm">
-                                      <div class="progress-bar progress-bar-success" style="width: 25%;"></div>
-                                    </div></td>
-                                  </tr>
-                                </tbody>
-                              </table>
+                    </div>
+                </div>
+            </div>
+            <!--End row-->
+
+            <!--Start row-->
+            <div class="row">
+
+                <!-- Start inbox widget-->
+                <div class="col-md-4">
+                    <div class="white-box">
+                        <h2 class="header-title">Activity Coming</h2>
+                        <div class="inbox-widget inbox-scroll-list">
+
+                            <div class="inbox-inner" each="result.activeListByStartTimeDesc">
+                                <a href="@{/index/active/}">
+                                    <div class="inbox-item">
+                                        <div class="inbox-img">
+                                            <img src="image" alt="" />
+                                        </div>
+
+                                        <div class="inbox-item-info">
+                                            <p class="author">item.name</p>
+                                            <p class="inbox-message"></p>
+                                            <p class="inbox-date">#dates.format(item.startTime, 'MM/dd/yyyy')</p>
+                                        </div>
+                                    </div>
+                                </a>
                             </div>
 
                         </div>
-                       </div>
-					<!-- Start inbox widget-->
-                   </div>
-                   <!--End row-->
+                    </div>
+                </div>
+                <!-- End inbox widget-->
 
-			    </div>
+                <!--Start chat widget-->
+                <div class="col-md-4">
+                    <div class="white-box">
+                        <h2 class="header-title">Recommend Activity</h2>
+
+                        <div class="chat-widget">
+                            <ul class="chat-scroll-list">
+                                <li class="left">
+                                    <img src="item.image" alt="" />
+                                    <div class="chat-info">
+                                        <a class="name" href="/index/active"> item.name</a>
+                                        <span class="datetime">#dates.format(item.startTime, 'MM/dd/yyyy')</span>
+                                        <span class="message" utext="">
+                                        </span>
+                                    </div>
+                                </li>
+
+
+
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <!--End chat widget-->
+
+                <!-- Start timeline-->
+                <div class="col-md-4">
+                    <div class="white-box">
+                        <h2 class="header-title">Latest Activity</h2>
+                        <ul class="timeline timeline-compact">
+                            <li class="latest">
+                                <div class="timeline-date">
+                                    #dates.format(item.createTime, 'MM/dd/yyyy')
+                                </div>
+                                <div class="timeline-title">
+                                    <a href="@{/index/active/}+${item.id}">
+                                        item.name
+                                    </a>
+                                </div>
+                                <div class="timeline-description">Cost:item.cost</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- End timeline-->
+
+
+                <!-- Start inbox widget-->
+                <div class="col-md-12">
+                    <div class="white-box">
+                        <h2 class="header-title"> Hot Projects </h2>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Project Name</th>
+                                        <th>Start Date</th>
+                                        <th>Deadline Date</th>
+                                        <th>Status</th>
+                                        <th>Progress</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>11</td>
+                                        <td></td>22</td>
+                                        <td>33</td>
+                                        <td>444</td>
+                                        <td>
+                                            <span class="label label-danger">On Hold</span>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-primary round" href="@{/index/active/}">Join</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- Start inbox widget-->
+            </div>
+            <!--End row-->
+
+        </div>
         <!-- End Wrapper-->
 
 
         <!--Start  Footer -->
         <div th:replace="footer :: footerBar"></div>
-         <!--End footer -->
+        <!--End footer -->
 
-       </div>
-      <!--End main content -->
+    </div>
+    <!--End main content -->
 
 
 
@@ -148,12 +237,10 @@
     <script src="/assets/js/jquery.min.js"></script>
     <script src="/assets/js/bootstrap.min.js"></script>
     <script src="/assets/plugins/moment/moment.js"></script>
-    <script  src="/assets/js/jquery.slimscroll.js "></script>
+    <script src="/assets/js/jquery.slimscroll.js "></script>
     <script src="/assets/js/jquery.nicescroll.js"></script>
     <script src="/assets/js/functions.js"></script>
     <!-- End core plugin -->
-
-
 
 </body>
 
