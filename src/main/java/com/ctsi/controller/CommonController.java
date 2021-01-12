@@ -25,13 +25,6 @@ public class CommonController {
     @Autowired
     private UserRestController userRestController;
 
-    //验证ca证书
-    @GetMapping("/.well-known/pki-validation/fileauth.txt")
-    @ResponseBody
-    public String testCa() {
-        return "2020122900000016gq1tn8urxcje2xcexf5yc54hhy7zbjpi60r8v7ccbgujo4c8";
-    }
-
 
     //用户登陆
     @RequestMapping("/login")

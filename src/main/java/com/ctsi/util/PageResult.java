@@ -19,6 +19,20 @@ public class PageResult<T> {
     private List<T> list;//每页数据集合
     private PageInfo<T> pageInfo;//pagehelper分页信息
 
+    public PageResult(List<T> list) {
+        this.pageInfo = new PageInfo<>(list);
+        //设置当前页
+        this.setPage(pageInfo.getPageNum());
+        //分页集合
+        this.setList(pageInfo.getList());
+        //每页条数
+        this.setRows(pageInfo.getPageSize());
+        //总条数
+        this.setTotal(pageInfo.getTotal());
+        //总页数
+        this.setPageSize(pageInfo.getPages());
+    }
+
     public PageResult(PageInfo<T> pageInfo) {
         //this.pageInfo = pageInfo;
         //设置当前页
