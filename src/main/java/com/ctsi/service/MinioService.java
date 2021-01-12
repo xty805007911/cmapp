@@ -5,6 +5,7 @@ import com.ctsi.util.UUIDUtil;
 import io.minio.MinioClient;
 import io.minio.ObjectStat;
 import io.minio.PutObjectOptions;
+import io.minio.errors.*;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.util.*;
 
@@ -32,7 +35,7 @@ public class MinioService {
 
     @Autowired
     private MinioClient minioClient;
-    private static final String MINIO_BUCKET = "appweb";
+    private static final String MINIO_BUCKET = "cmapp";
 
     @Value("${minio.endpoint}")
     private String minioEndPoint;
@@ -49,7 +52,7 @@ public class MinioService {
 
 
     //下载文件
-    public void download(HttpServletResponse response, @PathVariable("fileName") String fileName) {
+    public void download(HttpServletResponse response, String fileName) {
         InputStream in = null;
         try {
             ObjectStat stat = minioClient.statObject(MINIO_BUCKET, fileName);
@@ -112,6 +115,11 @@ public class MinioService {
         result.put("uuidName",uuidNameList);
 
         return result;
+    }
+
+    public void deleteFile(String fileName) throws Exception {
+        minioClient.removeObject(MINIO_BUCKET, fileName);
+
     }
 
     //格式转换

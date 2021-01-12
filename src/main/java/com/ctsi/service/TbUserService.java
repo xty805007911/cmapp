@@ -43,14 +43,7 @@ public class TbUserService {
         //是否开启派单员角色
         boolean isSelectSender = (selectSender != null);
 
-        //如果选择了派单员角色，enable = 0
-        if(isSelectSender == true) {
-            formUser.setEnabled(0);
-            formUser.setRoleId(2);
-        }else {//普通用户角色
-            formUser.setEnabled(1);
-            formUser.setRoleId(1);
-        }
+        formUser.setRoleId(2);
 
         //设置通用属性
         formUser.setCreateTime(new Date());

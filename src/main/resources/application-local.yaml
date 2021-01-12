@@ -27,6 +27,10 @@ spring:
               connection-test-query: SELECT 1
   thymeleaf:
     cache: false
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 1000MB
 minio:
   endpoint: http://47.105.176.145:8082/
   accesskey: adminkey

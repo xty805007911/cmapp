@@ -21,6 +21,7 @@
   <script src="http://cdn.staticfile.org/vue/2.6.11/vue.min.js"></script>
   <script src="http://cdn.staticfile.org/axios/0.19.2/axios.min.js"></script>
   <script src="http://cdn.staticfile.org/element-ui/2.13.1/index.js"></script>
+  <link rel="stylesheet" href="http://cdn.staticfile.org/element-ui/2.13.1/theme-chalk/index.css">
 
 
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -54,12 +55,12 @@
           <a href="#"><i class="icon-layers"></i>
             <span>社团管理</span></a>
           <ul class="sub-menu-list">
-            <li><a href="@{/order/user/list}">发布公告</a></li>
-            <li><a href="@{/}"> 我要下单</a></li>
+            <li><a th:href="@{/toAddActive}">发布公告</a></li>
+            <li><a th:href="@{/toUpload}"> 文件上传</a></li>
           </ul>
         </li>
 
-        <li class="menu-list">
+        <li class="menu-list nav active nav-hover">
           <a href="#"><i class="icon-layers"></i>
             <span>社团用户</span></a>
           <ul class="sub-menu-list">
@@ -116,10 +117,10 @@
               <div v-for="(item,index) in messageList" :key="item.id">
                 <li class="left">
                   <img :src="item.user.avatar" alt="" />
-                  <div class="chat-info">
-                    <a class="name" href="#">{{item.user.realname}}</a> AT
-                    <span class="datetime">{{item.createTime}}</span><br />
-                    <span class="message" v-html="item.message">
+                  <div class="chat-info" style="background:#FFF5EE">
+                    <a class="name" style="color: black" href="#">{{item.user.realname}}</a> AT
+                    <span style="color: black" class="datetime">{{item.createTime}}</span><br />
+                    <span class="message" v-html="item.message" style="color: black">
                     </span>
                   </div>
                 </li>
@@ -144,20 +145,21 @@
             <h2 class="header-title">文件分享</h2>
             <div class="inbox-widget inbox-scroll-list">
 
-              <div class="inbox-inner" each="result.activeListByStartTimeDesc">
-                <a href="@{/index/active/}">
-                  <div class="inbox-item">
-                    <div class="inbox-img">
-                      <img src="image" alt="" />
-                    </div>
+              <div class="inbox-inner" each="result.activeListByStartTimeDesc" style="height: 300px; overflow-y:scroll">
+                <el-table :data="results" stripe style="width: 100%">
+                  <el-table-column type="index" width="50"></el-table-column>
+                  <el-table-column prop="name" label="文件名" width="180"></el-table-column>
+                  <el-table-column label="操作">
+                    <template slot-scope="scope">
+                      <a :href="'/file/download/' + scope.row.id + ''" class="el-icon-download">下载</a>
+                      <div th:if="${session.sessionUser!=null and session.sessionUser.roleId==1}">
+                        <a :href="'/file/delete/' + scope.row.id + ''" @click.prevent="deleteFile($event,scope.$index,results)"
+                          class="el-icon-delete">删除</a>
+                      </div>
+                    </template>
+                  </el-table-column>
+                </el-table>
 
-                    <div class="inbox-item-info">
-                      <p class="author">item.name</p>
-                      <p class="inbox-message"></p>
-                      <p class="inbox-date">#dates.format(item.startTime, 'MM/dd/yyyy')</p>
-                    </div>
-                  </div>
-                </a>
               </div>
 
             </div>
@@ -196,7 +198,7 @@
             <div class="compose-body">
               <input type="hidden">
               <div class="compose-message">
-                <textarea class="summernote" name="message" ></textarea>
+                <textarea class="summernote" name="message"></textarea>
               </div>
               <div class="compose-options">
                 <div class="pull-right">
@@ -243,12 +245,20 @@
         intervalId: null,
         messageList: [],// 接收的消息数组
         message: '',
+        previewImg: true,
+        results: [],
+        imgSrc: '',
+        imgList: []
       },
       methods: {
         //初始化
         init() {
           axios.get('/api/chat/room/list').then(response => {
             this.messageList = response.data.list;
+
+            axios.get('/file/list').then(response => {
+              this.results = response.data
+            })
           });
         },
         //发送消息
@@ -259,15 +269,26 @@
           axios.post('/api/chat/room/post', messageData)
             .then(response => {
               let status = response.data;
-              if(status === 1) {
+              if (status === 1) {
                 this.message = "";
                 $(".note-editable").html("");
                 alert("发布成功~");
-              }else {
+              } else {
                 alert("发布失败，请登录哦~");
               }
             });
         },
+        deleteFile(e, index, list) {
+          axios.delete(e.target.href, {}).then(res => {
+            if (res.data === 1) {
+              this.$message('删除成功！');
+              list.splice(index, 1);
+            } else {
+              this.$message('删除失败！');
+            }
+          });
+        },
+
         // 定时刷新数据函数
         dataRefreh() {
           // 计时器正在进行中，退出函数
@@ -278,7 +299,7 @@
           this.intervalId = setInterval(() => {
             //console.log("刷新" + new Date());
             this.init(); //加载数据函数
-          }, 500);
+          }, 50000);
         },
         // 停止定时器
         clear() {
