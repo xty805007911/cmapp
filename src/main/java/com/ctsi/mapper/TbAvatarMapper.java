@@ -1,6 +1,7 @@
 package com.ctsi.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.ctsi.entity.TbActive;
 import com.ctsi.entity.TbAvatar;
 import org.springframework.stereotype.Repository;
 
