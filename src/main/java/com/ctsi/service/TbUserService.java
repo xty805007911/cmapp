@@ -41,9 +41,9 @@ public class TbUserService {
     //保存用户信息
     public void save(TbUser formUser,String selectSender) {
         //是否开启派单员角色
-        boolean isSelectSender = (selectSender != null);
 
         formUser.setRoleId(2);
+        formUser.setEnabled(1);
 
         //设置通用属性
         formUser.setCreateTime(new Date());
@@ -118,6 +118,14 @@ public class TbUserService {
     //更新用户
     public void updateUserInfo(TbUser user) {
         tbUserMapper.updateById(user);
+    }
+
+    //查询所有
+    public List<TbUser> userList() {
+        QueryWrapper<TbUser> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByAsc("role_id");
+        queryWrapper.eq("enabled",1);
+        return tbUserMapper.selectList(queryWrapper);
     }
 
 

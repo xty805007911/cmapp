@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @ClassName : UserRestController
@@ -35,5 +36,11 @@ public class UserRestController {
             return null;
         }
         return (TbUser) sessionUserObj;
+    }
+
+    //查询所有用户
+    @GetMapping("/api/user/list")
+    public List<TbUser> userList() {
+        return userService.userList();
     }
 }

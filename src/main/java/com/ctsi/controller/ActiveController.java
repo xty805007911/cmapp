@@ -5,10 +5,13 @@ import com.ctsi.entity.TbUser;
 import com.ctsi.service.TbActiveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Description:
@@ -36,5 +39,19 @@ public class ActiveController {
         active.setCreateUserId(currentUser.getId());
         activeService.add(active);
         return "redirect:/";
+    }
+
+    //查询
+    @RequestMapping("/api/active/list")
+    @ResponseBody
+    public List<TbActive> list() {
+        return activeService.list();
+    }
+
+    //查询
+    @RequestMapping("/api/active/{id}")
+    @ResponseBody
+    public TbActive getById(@PathVariable Integer id) {
+        return activeService.getById(id);
     }
 }

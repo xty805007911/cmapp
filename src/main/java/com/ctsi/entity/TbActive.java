@@ -1,8 +1,10 @@
 package com.ctsi.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -22,6 +24,9 @@ public class TbActive {
     private String content;
     private Date createTime;
     private Integer createUserId;
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date joinTime;
+    @TableField(exist = false)
+    private TbUser createUser;
 
 }

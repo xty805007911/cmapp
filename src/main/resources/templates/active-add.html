@@ -38,6 +38,7 @@
 
 
   <!--引入左侧菜单栏-->
+  <div th:replace="lefter :: lefterBar(activeUrl='manage')"></div>
 
   <!-- main content start-->
   <div class="main-content">
@@ -53,19 +54,24 @@
             <div class="table-responsive">
               <table class="table table-hover">
                 <form th:action="@{/active/add}" method="POST">
-
                   <div class="white-box">
-                    <h2 class="header-title"> Detail</h2>
+                    <h2 class="header-title"> </h2>
                     <div class="compose-body">
                       <div class="form-group">
                         <input type="text" class="form-control" placeholder="标题" name="title">
                       </div>
+                      <div class="form-group">
+                        <div class="layui-input-inline">
+                          <input type="text" id="joinTime" name="joinTime" placeholder="活动时间">
+                        </div>
+                      </div>
                       <div class="compose-message">
-                        <textarea class="summernote" name="message"></textarea>
+                        <textarea class="summernote" ></textarea>
+                        <input type="hidden" id="postcontent" name="content">
                       </div>
                       <div class="compose-options">
                         <div class="pull-right">
-                          <button class="btn btn-primary" @click="sendMessage()"><i class="fa fa-send"></i>发布</button>
+                          <button class="btn btn-primary" onclick="post()"><i class="fa fa-send"></i>发布</button>
                         </div>
                       </div>
                     </div>
@@ -106,6 +112,12 @@
       type: 'datetime',
       trigger: 'click'
     });
+
+    function post() {
+      let content = $(".note-editable").html();
+      $("#postcontent").val(content);
+    }
+
   </script>
 
 </body>
