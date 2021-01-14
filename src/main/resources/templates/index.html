@@ -52,22 +52,22 @@
       <!--Sidebar nav-->
       <ul class="nav nav-pills nav-stacked custom-nav">
 
-          <li><a href="#"><span id="currentTime"></span></a></li>
+        <li><a href="#"><span id="currentTime"></span></a></li>
 
         <li class="menu-list" th:if="${session.sessionUser != null and  session.sessionUser.roleId == 1}">
-          <a href="#"><i class="icon-note"></i> 
-            <span>社团管理</span></a>
+          <a href="#"><i class="icon-note"></i>
+            <span>Manage</span></a>
           <ul class="sub-menu-list">
-            <li><a th:href="@{/toAddActive}">发布公告</a></li>
-            <li><a th:href="@{/toUpload}"> 文件上传</a></li>
+            <li><a th:href="@{/toAddActive}">Issue announcement</a></li>
+            <li><a th:href="@{/toUpload}"> Upload files</a></li>
           </ul>
         </li>
 
-        
+
 
         <li class="menu-list nav active nav-hover">
           <a href="#"><i class="icon-layers"></i>
-            <span>社团用户</span></a>
+            <span>Users</span></a>
           <ul class="sub-menu-list">
             <li th:each="item:${userList}">
               <a href="#">
@@ -150,19 +150,19 @@
         <!-- Start inbox widget-->
         <div class="col-md-4">
           <div class="white-box">
-            <h2 class="header-title">文件分享</h2>
+            <h2 class="header-title">Files Sharing</h2>
             <div class="inbox-widget inbox-scroll-list">
 
               <div class="inbox-inner" each="result.activeListByStartTimeDesc" style="height: 300px; overflow-y:scroll">
                 <el-table :data="results" stripe style="width: 100%">
                   <el-table-column type="index" width="50"></el-table-column>
-                  <el-table-column prop="name" label="文件名" width="180"></el-table-column>
-                  <el-table-column label="操作">
+                  <el-table-column prop="name" label="File Name" width="180"></el-table-column>
+                  <el-table-column label="Operation">
                     <template slot-scope="scope">
-                      <a :href="'/file/download/' + scope.row.id + ''" class="el-icon-download">下载</a>
+                      <a :href="'/file/download/' + scope.row.id + ''" class="el-icon-download">Download</a>
                       <span th:if="${session.sessionUser!=null and session.sessionUser.roleId==1}">
                         <a :href="'/file/delete/' + scope.row.id + ''" @click.prevent="deleteFile($event,scope.$index,results)"
-                          class="el-icon-delete">删除</a>
+                          class="el-icon-delete">Delete</a>
                       </span>
                     </template>
                   </el-table-column>
@@ -179,7 +179,7 @@
         <!--Start chat widget-->
         <div class="col-md-4">
           <div class="white-box">
-            <h2 class="header-title">公告栏</h2>
+            <h2 class="header-title">Bulletin board</h2>
 
             <div class="chat-widget">
               <ul class="chat-scroll-list">
@@ -187,36 +187,36 @@
                   <div class="block" style="height: 300px; overflow-y:scroll">
                     <div class="radio">
                       <el-radio-group v-model="reverse">
-                        <el-radio :label="false">正序</el-radio>
-                        <el-radio :label="true">倒序</el-radio>
+                        <el-radio :label="false">Positive</el-radio>
+                        <el-radio :label="true">Reverse</el-radio>
                       </el-radio-group>
                     </div>
                     <el-timeline :reverse="reverse">
 
                       <el-timeline-item v-for="(activity, index) in activeList" :key="index" :timestamp="activity.createTime">
-                        <el-button type="text" @click="getActivityDetail(activity.id)">详情</el-button>
+                        <el-button type="text" @click="getActivityDetail(activity.id)">Detail</el-button>
                         {{activity.title}}
-                        <el-dialog title="活动详情" :visible.sync="dialogTableVisible">
+                        <el-dialog title="Detail" :visible.sync="dialogTableVisible">
                           <el-form :model="activityDetail">
-                            <el-form-item label="活动标题">
+                            <el-form-item label="Tital">
                               <span>{{activityDetail.title}}</span>
                             </el-form-item>
                           </el-form>
 
                           <el-form :model="activityDetail">
-                            <el-form-item label="活动详情">
+                            <el-form-item label="Content">
                               <span v-html="activityDetail.content"></span>
                             </el-form-item>
                           </el-form>
 
                           <el-form :model="activityDetail">
-                            <el-form-item label="活动时间">
+                            <el-form-item label="Time">
                               <span v-html="activityDetail.joinTime"></span>
                             </el-form-item>
                           </el-form>
 
                           <el-form :model="activityDetail">
-                            <el-form-item label="活动创建时间">
+                            <el-form-item label="CreateTime">
                               <span v-html="activityDetail.createTime"></span>
                             </el-form-item>
                           </el-form>
@@ -237,7 +237,7 @@
         <!-- Start inbox widget-->
         <div class="col-md-8">
           <div class="white-box">
-            <h2 class="header-title"> 动态消息发布</h2>
+            <h2 class="header-title"> </h2>
             <div class="compose-body">
               <input type="hidden">
               <div class="compose-message">
@@ -245,7 +245,7 @@
               </div>
               <div class="compose-options">
                 <div class="pull-right">
-                  <button class="btn btn-primary" @click="sendMessage()"><i class="fa fa-send"></i>发布</button>
+                  <button class="btn btn-primary" @click="sendMessage()"><i class="fa fa-send"></i>Send</button>
                 </div>
               </div>
             </div>
@@ -329,9 +329,9 @@
               if (status === 1) {
                 this.message = "";
                 $(".note-editable").html("");
-                alert("发布成功~");
+                alert("Success~");
               } else {
-                alert("发布失败，请登录哦~");
+                alert("Error，to Login~");
               }
             });
         },
@@ -339,10 +339,10 @@
         deleteFile(e, index, list) {
           axios.delete(e.target.href, {}).then(res => {
             if (res.data === 1) {
-              this.$message('删除成功！');
+              this.$message('success！');
               list.splice(index, 1);
             } else {
-              this.$message('删除失败！');
+              this.$message('error！');
             }
           });
         },
@@ -362,9 +362,12 @@
           }
           // 计时器为空，操作
           this.intervalId = setInterval(() => {
-            $("#currentTime").html((new Date()).toLocaleString());
+            //$("#currentTime").html((new Date()).toLocaleString());
+            var now = new Date()
+            now.setMinutes(now.getMinutes() + now.getTimezoneOffset())
+            $("#currentTime").html(now);
             this.init(); //加载数据函数
-            
+
           }, 1000);
         },
         // 停止定时器
