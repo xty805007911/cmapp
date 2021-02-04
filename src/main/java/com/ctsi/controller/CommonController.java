@@ -96,7 +96,7 @@ public class CommonController {
         TbUser user = userService.getUserById(userRestController.getCurrentUser(request).getId());
         request.setAttribute("user",user);
         request.setAttribute("avatarList",userService.avatarListAll());
-        return "/user-info";
+        return "user-info";
     }
 
     //修改用户信息

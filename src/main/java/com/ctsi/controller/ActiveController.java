@@ -43,7 +43,7 @@ public class ActiveController {
 
     //查询
     @RequestMapping("/api/active/list")
-    @ResponseBody
+    @ResponseBody//json
     public List<TbActive> list() {
         return activeService.list();
     }
